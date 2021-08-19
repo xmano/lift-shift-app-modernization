@@ -1,5 +1,4 @@
-# Logs
-logs
+﻿# Logs
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -102,3 +101,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+#Project files
+docs/scenario.txt
+
+tmp/
+
+secret/

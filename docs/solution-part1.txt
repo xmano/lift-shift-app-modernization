@@ -1,0 +1,77 @@
+Lift & Shift Solution Steps
+============================
+
+1. Set project in GCP Console if not already set 
+   gcloud config set project project_name
+
+2. Set up compute zone
+   gcloud config set compute/zone us-west1-a
+
+   How to get current compute zone?
+
+3. Add Firewall rules to allow traffic on HTTP & SSH ports 
+
+   For HTTP (Port 80)
+   gcloud compute firewall-rules create allow-http --network default \
+    --allow tcp:80 --source-ranges 0.0.0.0/0
+
+   For SSH (Port 22)
+   gcloud compute firewall-rules create allow-ssh --network default \
+    --allow tcp:22 --source-ranges 0.0.0.0/0
+
+
+4. Create a VM:
+
+   gcloud compute instances create app-01 --project=$DEVSHELL_PROJECT_ID \
+   --zone=us-west1-a --machine-type=n1-standard-1 --subnet=default \
+   --scopes="cloud-platform" --tags=http-server,https-server \
+   --image=ubuntu-minimal-1604-xenial-v20210119a --image-project=ubuntu-os-cloud \
+   --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=app-01
+   
+
+  gcloud compute instances create app-01 --project=$DEVSHELL_PROJECT_ID \
+  --zone=us-west1-a --machine-type=n1-standard-1 --subnet=default \
+  --scopes="cloud-platform" --tags=http-server,https-server \
+  --image=ubuntu-minimal-1604-xenial-v20210119a --image-project=ubuntu-os-cloud \
+  --boot-disk-size=10GB --boot-disk-type=pd-standard --boot-disk-device-name=app-01
+
+
+
+5. Generatingkeypairandsettingupthepermissions.
+
+  ssh-keygen -t rsa -f ~/.ssh/app-key -C [USERNAME]
+  chmod 400 ~/.ssh/app-key
+  
+6. Checking the changes permission:
+  ls -l | grep app-key 
+  
+7. Importing the key pair generated to GoogleCloud:
+  gcloud compute config-ssh --ssh-key-file=~/.ssh/app-key
+
+
+8. Lift & Shift the web app (portal) to VM Instance 
+   That is to say we zip the app files and then move that to the 
+   VM webserver and host it there for serving the web pages.
+
+   unzip 
+   chmod 644 *
+
+9. Navigate to the webserver location pointed to by external IP
+______________________________________________________________________
+
+App Modernization by Containerization 
+=====================================
+
+
+
+______________________________________________________________________
+
+💡💡
+
+Wouldn't it be better to implement the provisioning code in Terraform 
+rather than learning and typing the CLI?
+
+
+This is similar to Hybrid App development in Mobile Apps, where you 
+code the app in web technologies instead of myriad native languages
+& SDKs

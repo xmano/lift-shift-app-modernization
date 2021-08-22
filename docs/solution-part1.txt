@@ -1,5 +1,6 @@
 Lift & Shift Solution Steps
 ============================
+Project: tcb-xkandacloud-m4-83417
 
 1. Set project in GCP Console if not already set 
    gcloud config set project project_name
@@ -39,7 +40,7 @@ Lift & Shift Solution Steps
 
 5. Generatingkeypairandsettingupthepermissions.
 
-  ssh-keygen -t rsa -f ~/.ssh/app-key -C [USERNAME]
+  ssh-keygen -t rsa -f ~/.ssh/app-key -C xkandacloud
   chmod 400 ~/.ssh/app-key
   
 6. Checking the changes permission:
@@ -47,6 +48,11 @@ Lift & Shift Solution Steps
   
 7. Importing the key pair generated to GoogleCloud:
   gcloud compute config-ssh --ssh-key-file=~/.ssh/app-key
+
+
+  Update the VM image libs 
+  sudo apt-get update && sudo apt-get install apache2 unzip -y
+
 
 
 8. Lift & Shift the web app (portal) to VM Instance 
@@ -59,8 +65,7 @@ Lift & Shift Solution Steps
 9. Navigate to the webserver location pointed to by external IP
 ______________________________________________________________________
 
-App Modernization by Containerization 
-=====================================
+
 
 
 
